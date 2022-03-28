@@ -84,7 +84,7 @@ public class Path {
         		}
         	}
         	if (best==null) {
-        		throw new IllegalArgumentException("Deux noeuds consecutif ne partagent pas d'arcs");
+        		throw new IllegalArgumentException("Deux noeuds consecutifs ne partagent pas d'arcs");
         		
         	}
         	arcs.add(best);
