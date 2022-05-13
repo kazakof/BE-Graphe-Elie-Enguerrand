@@ -33,6 +33,10 @@ public class Label implements Comparable<Label>{
 		return this.Cost ;
 	}
 	
+	public double getTotalCost() {
+		return this.Cost;
+	}
+	
 	/*Setters*/
 	public void setFather(Arc Father) {
 		this.Father = Father ;
@@ -49,6 +53,6 @@ public class Label implements Comparable<Label>{
 	
 	@Override
 	public int compareTo(Label o) {
-		return Double.compare(this.getCost(), o.getCost()) ;
+		return Double.compare(this.getTotalCost(), o.getTotalCost()) ;
 	}
 }
