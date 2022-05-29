@@ -18,6 +18,7 @@ public class AStarAlgorithm extends DijkstraAlgorithm {
     	List<Node> nodes = graph.getNodes() ;
     	
     	double Cost = 0;
+    	int vitesse_max=Speed();
     	
     	//Destination point
     	Point DestinationPoint = data.getDestination().getPoint();
@@ -29,11 +30,29 @@ public class AStarAlgorithm extends DijkstraAlgorithm {
     		if (data.getMode() == AbstractInputData.Mode.LENGTH) {
     			Cost = node.getPoint().distanceTo(DestinationPoint);
     			}
+    		else {
+    			Cost = 3.6 * node.getPoint().distanceTo(DestinationPoint) / vitesse_max;
+    			
+    		}
   
     		ArrayLabels[node.getId()].setEstimatedCost(Cost);	
     	}
     	
     	return ArrayLabels;
+    }
+    
+    private int Speed() {
+    	int MaxSpeedGraph = graph.getGraphInformation().getMaximumSpeed();
+    	int Speed=0;
+    	
+    	if (MaxSpeedGraph ==  GraphStatistics.NO_MAXIMUM_SPEED ) {
+    		Speed=MaxSpeedGraph;
+    	}
+    	else {
+    		Speed=130;
+    	}  
+    	
+    	return Speed ;
     }
 
 }

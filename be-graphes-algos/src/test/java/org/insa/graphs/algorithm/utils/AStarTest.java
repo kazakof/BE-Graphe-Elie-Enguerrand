@@ -6,28 +6,29 @@ import static org.junit.Assert.assertTrue;
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
-import java.util.*;
+import java.util.ArrayList;
 
 import org.insa.graphs.algorithm.ArcInspector;
 import org.insa.graphs.algorithm.ArcInspectorFactory;
 import org.insa.graphs.algorithm.AbstractInputData.Mode;
-import org.insa.graphs.algorithm.shortestpath.*;
-import org.insa.graphs.model.Path ;
+import org.insa.graphs.algorithm.shortestpath.AStarAlgorithm;
+import org.insa.graphs.algorithm.shortestpath.BellmanFordAlgorithm;
+import org.insa.graphs.algorithm.shortestpath.DijkstraAlgorithm;
+import org.insa.graphs.algorithm.shortestpath.ShortestPathData;
+import org.insa.graphs.algorithm.shortestpath.ShortestPathSolution;
+import org.insa.graphs.model.Arc;
 import org.insa.graphs.model.Graph;
 import org.insa.graphs.model.Node;
-import org.insa.graphs.model.Arc;
-
+import org.insa.graphs.model.Path;
 import org.insa.graphs.model.io.BinaryGraphReader;
 import org.insa.graphs.model.io.GraphReader;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-
-public class DijkstraTest {
+public class AStarTest {
 	
 	protected static String mapCarre, mapHauteGaronne ;
-	protected static DijkstraAlgorithm CheminNul_d, CheminStandardCarre_d, CheminStandard_d, CheminImpossible_d, CheminNul_t, CheminStandardCarre_t, CheminStandard_t, CheminImpossible_t, CheminNul_vd, CheminStandardCarre_vd, CheminStandard_vd, CheminImpossible_vd;
+	protected static AStarAlgorithm CheminNul_d, CheminStandardCarre_d, CheminStandard_d, CheminImpossible_d, CheminNul_t, CheminStandardCarre_t, CheminStandard_t, CheminImpossible_t, CheminNul_vd, CheminStandardCarre_vd, CheminStandard_vd, CheminImpossible_vd;
 	
 	@BeforeClass
 	public static void initAll() throws Exception {
@@ -79,21 +80,21 @@ public class DijkstraTest {
 	    //Initialisation de Dijkstra
 	    //Jeu de tests pour le chemin le plus court
 	    //Toutes routes
-	    CheminNul_d = new DijkstraAlgorithm(CheminNulData_d);
-	    CheminStandardCarre_d = new DijkstraAlgorithm(CheminStandardCarreData_d);
-	    CheminImpossible_d = new DijkstraAlgorithm(CheminImpossibleData_d);
-	    CheminStandard_d = new DijkstraAlgorithm(CheminStandardData_d);
+	    CheminNul_d = new AStarAlgorithm(CheminNulData_d);
+	    CheminStandardCarre_d = new AStarAlgorithm(CheminStandardCarreData_d);
+	    CheminImpossible_d = new AStarAlgorithm(CheminImpossibleData_d);
+	    CheminStandard_d = new AStarAlgorithm(CheminStandardData_d);
 	    //Routes autorisées pour les voitures seulement
-	    CheminNul_vd = new DijkstraAlgorithm(CheminNulData_cl);
-	    CheminStandardCarre_vd = new DijkstraAlgorithm(CheminStandardCarreData_cl);
-	    CheminImpossible_vd = new DijkstraAlgorithm(CheminImpossibleData_cl);
-	    CheminStandard_vd = new DijkstraAlgorithm(CheminStandardData_cl);
+	    CheminNul_vd = new AStarAlgorithm(CheminNulData_cl);
+	    CheminStandardCarre_vd = new AStarAlgorithm(CheminStandardCarreData_cl);
+	    CheminImpossible_vd = new AStarAlgorithm(CheminImpossibleData_cl);
+	    CheminStandard_vd = new AStarAlgorithm(CheminStandardData_cl);
 	    
 	    //Jeu de tests pour le chemin le plus rapide
-	    CheminNul_t = new DijkstraAlgorithm(CheminNulData_t);
-	    CheminStandardCarre_t = new DijkstraAlgorithm(CheminStandardCarreData_t);
-	    CheminImpossible_t = new DijkstraAlgorithm(CheminImpossibleData_t);
-	    CheminStandard_t = new DijkstraAlgorithm(CheminStandardData_t);
+	    CheminNul_t = new AStarAlgorithm(CheminNulData_t);
+	    CheminStandardCarre_t = new AStarAlgorithm(CheminStandardCarreData_t);
+	    CheminImpossible_t = new AStarAlgorithm(CheminImpossibleData_t);
+	    CheminStandard_t = new AStarAlgorithm(CheminStandardData_t);
 	}
 	
 	@Test
@@ -117,7 +118,7 @@ public class DijkstraTest {
 		assertTrue(CheminStandard_t.run().getPath().isValid());
 	}
 	
-	public void testLongueurSolution(DijkstraAlgorithm D) throws IllegalArgumentException{
+	public void testLongueurSolution(AStarAlgorithm D) throws IllegalArgumentException{
 		ShortestPathSolution solution = D.run();
 		
 		//Construction de la liste des nodes de la solution
@@ -161,7 +162,7 @@ public class DijkstraTest {
 			assertEquals(CheminNul_t.run().getPath().getLength(), 0, 0);
 		}
 		
-		public void testOptimaliteBellmanFord(DijkstraAlgorithm D) {
+		public void testOptimaliteBellmanFord(AStarAlgorithm D) {
 			ShortestPathSolution solutionD = D.run();
 			ShortestPathSolution solutionB = new BellmanFordAlgorithm(D.getInputData()).run();
 			
@@ -183,5 +184,5 @@ public class DijkstraTest {
 			testOptimaliteBellmanFord(CheminStandardCarre_t);
 			testOptimaliteBellmanFord(CheminStandard_t);	
 		}
-		
+
 }

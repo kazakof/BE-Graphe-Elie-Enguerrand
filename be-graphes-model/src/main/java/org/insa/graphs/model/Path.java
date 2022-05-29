@@ -242,7 +242,7 @@ public class Path {
      * @return true if this path is empty, false otherwise.
      */
     public boolean isEmpty() {
-        return this.origin == null;
+        return (this.origin == null);
     }
 
     /**
